@@ -65,17 +65,15 @@ extern int yydebug;
     ENTAO = 266,                   /* ENTAO  */
     SENAO = 267,                   /* SENAO  */
     ENQUANTO = 268,                /* ENQUANTO  */
-    EXECUTE = 269                  /* EXECUTE  */
+    EXECUTE = 269,                 /* EXECUTE  */
+    ID = 270,                      /* ID  */
+    STRING = 271,                  /* STRING  */
+    NUMBER = 272                   /* NUMBER  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
-#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
-# define YYSTYPE_IS_TRIVIAL 1
-# define YYSTYPE_IS_DECLARED 1
-#endif
 
 
 extern YYSTYPE yylval;

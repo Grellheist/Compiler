@@ -1,21 +1,49 @@
 %{
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "parser.tab.h"
 %}
 
+%option noyywrap
+
 %%
 
-programa    { printf("Encontrei: %s\n", yytext); return PROGRAMA; }
-car         { printf("Encontrei: %s\n", yytext); return CAR; }
-int         { printf("Encontrei: %s\n", yytext); return INT; }
-retorne     { printf("Encontrei: %s\n", yytext); return RETORNE; }
-leia        { printf("Encontrei: %s\n", yytext); return LEIA; }
-escreva     { printf("Encontrei: %s\n", yytext); return ESCREVA; }
-novalinha   { printf("Encontrei: %s\n", yytext); return NOVALINHA; }
-se          { printf("Encontrei: %s\n", yytext); return SE; }
-entao       { printf("Encontrei: %s\n", yytext); return ENTAO; }
-senao       { printf("Encontrei: %s\n", yytext); return SENAO; }
-enquanto    { printf("Encontrei: %s\n", yytext); return ENQUANTO; }
-execute     { printf("Encontrei: %s\n", yytext); return EXECUTE; }
+"programa"   { return PROGRAMA; }
+"car"        { return CAR; }
+"int"        { return INT; }
+"retorne"    { return RETORNE; }
+"leia"       { return LEIA; }
+"escreva"    { return ESCREVA; }
+"novalinha"  { return NOVALINHA; }
+"se"         { return SE; }
+"entao"      { return ENTAO; }
+"senao"      { return SENAO; }
+"enquanto"   { return ENQUANTO; }
+"execute"    { return EXECUTE; }
+
+[a-zA-Z_][a-zA-Z0-9_]*  { yylval = strdup(yytext); return ID; }
+[0-9]+      { yylval = strdup(yytext); return NUMBER; }
+\"[^\"\n]*\" { yylval = strdup(yytext); return STRING; }
+
+"/*"        { /* Beginning of a comment */
+             while(1) {
+                char c = getchar();
+                if (c == EOF) {
+                    fprintf(stderr, "ERRO: COMENTARIO NAO TERMINA\n");
+                    exit(1);
+                } else if (c == '*' && getchar() == '/') {
+                    break; // End of comment
+                }
+             }
+           }
+
+[ \t\n]      ; // Skip whitespace
+
+.           {
+                fprintf(stderr, "ERRO: CARACTERE INVALIDO\n");
+                exit(1);
+            }
 
 %%
 
