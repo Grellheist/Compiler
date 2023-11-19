@@ -7,38 +7,43 @@
 
 %option noyywrap
 
+numeros ([0-9])+
+id ([a-zA-Z_][a-zA-Z0-9_])*
+string (\"[^\"\n]*\")
+
+
 %%
 
-"programa"   { return PROGRAMA; }
-"car"        { return CAR; }
-"int"        { return INT; }
-"retorne"    { return RETORNE; }
-"leia"       { return LEIA; }
-"escreva"    { return ESCREVA; }
-"novalinha"  { return NOVALINHA; }
-"se"         { return SE; }
-"entao"      { return ENTAO; }
-"senao"      { return SENAO; }
-"enquanto"   { return ENQUANTO; }
-"execute"    { return EXECUTE; }
+programa   { return PROGRAMA; }
+car        { return CAR; }
+int        { return INT; }
+retorne    { return RETORNE; }
+leia       { return LEIA; }
+escreva    { return ESCREVA; }
+novalinha  { return NOVALINHA; }
+se         { return SE; }
+entao      { return ENTAO; }
+senao      { return SENAO; }
+enquanto   { return ENQUANTO; }
+execute    { return EXECUTE; }
 
-[a-zA-Z_][a-zA-Z0-9_]*  { yylval = strdup(yytext); return ID; }
-[0-9]+      { yylval = strdup(yytext); return NUMBER; }
-\"[^\"\n]*\" { yylval = strdup(yytext); return STRING; }
+{id}  { yylval.str = strdup(yytext); return ID; }
+{numeros}      { yylval.str = strdup(yytext); return NUMBER; }
+{string} { yylval.str = strdup(yytext); return STRING; }
 
-"/*"        { /* Beginning of a comment */
+"/*"        { 
              while(1) {
                 char c = getchar();
                 if (c == EOF) {
                     fprintf(stderr, "ERRO: COMENTARIO NAO TERMINA\n");
                     exit(1);
                 } else if (c == '*' && getchar() == '/') {
-                    break; // End of comment
+                    break; 
                 }
              }
            }
 
-[ \t\n]      ; // Skip whitespace
+[ \t\n]      ; 
 
 .           {
                 fprintf(stderr, "ERRO: CARACTERE INVALIDO\n");
@@ -46,9 +51,3 @@
             }
 
 %%
-
-int main() {
-    yylex();
-    return 0;
-}
-

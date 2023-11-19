@@ -73,18 +73,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Redefine YYSTYPE to include the necessary fields */
-#define YYSTYPE_IS_DECLARED
-typedef struct {
-    char *str;
-} YYSTYPE;
-
-extern YYSTYPE yylval; // Declares the union variable
+extern int yylex();
+extern int yylineno;
+extern char *yytext;
 
 void yyerror(const char *msg);
 
 
-#line 88 "parser.tab.c"
+#line 84 "parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -1087,26 +1083,92 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 5: /* statement: CAR  */
+#line 32 "parser.y"
+                     { printf("Found keyword: CAR\n"); }
+#line 1090 "parser.tab.c"
+    break;
+
+  case 6: /* statement: INT  */
+#line 33 "parser.y"
+                     { printf("Found keyword: INT\n"); }
+#line 1096 "parser.tab.c"
+    break;
+
+  case 7: /* statement: RETORNE  */
+#line 34 "parser.y"
+                     { printf("Found keyword: RETORNE\n"); }
+#line 1102 "parser.tab.c"
+    break;
+
+  case 8: /* statement: LEIA  */
+#line 35 "parser.y"
+                     { printf("Found keyword: LEIA\n"); }
+#line 1108 "parser.tab.c"
+    break;
+
+  case 9: /* statement: ESCREVA  */
+#line 36 "parser.y"
+                     { printf("Found keyword: ESCREVA\n"); }
+#line 1114 "parser.tab.c"
+    break;
+
+  case 10: /* statement: NOVALINHA  */
+#line 37 "parser.y"
+                     { printf("Found keyword: NOVALINHA\n"); }
+#line 1120 "parser.tab.c"
+    break;
+
+  case 11: /* statement: SE  */
+#line 38 "parser.y"
+                     { printf("Found keyword: SE\n"); }
+#line 1126 "parser.tab.c"
+    break;
+
+  case 12: /* statement: ENTAO  */
+#line 39 "parser.y"
+                     { printf("Found keyword: ENTAO\n"); }
+#line 1132 "parser.tab.c"
+    break;
+
+  case 13: /* statement: SENAO  */
+#line 40 "parser.y"
+                     { printf("Found keyword: SENAO\n"); }
+#line 1138 "parser.tab.c"
+    break;
+
+  case 14: /* statement: ENQUANTO  */
+#line 41 "parser.y"
+                     { printf("Found keyword: ENQUANTO\n"); }
+#line 1144 "parser.tab.c"
+    break;
+
+  case 15: /* statement: EXECUTE  */
+#line 42 "parser.y"
+                     { printf("Found keyword: EXECUTE\n"); }
+#line 1150 "parser.tab.c"
+    break;
+
   case 16: /* statement: ID  */
 #line 43 "parser.y"
-                    { printf("ID: %s\n", (yyvsp[0].yystype).str); }
-#line 1094 "parser.tab.c"
+                     { printf("Found ID: %s\n", (yyvsp[0].str)); }
+#line 1156 "parser.tab.c"
     break;
 
   case 17: /* statement: STRING  */
 #line 44 "parser.y"
-                    { printf("STRING: %s\n", (yyvsp[0].yystype).str); }
-#line 1100 "parser.tab.c"
+                     { printf("Found STRING: %s\n", (yyvsp[0].str)); }
+#line 1162 "parser.tab.c"
     break;
 
   case 18: /* statement: NUMBER  */
 #line 45 "parser.y"
-                    { printf("NUMBER: %s\n", (yyvsp[0].yystype).str); }
-#line 1106 "parser.tab.c"
+                     { printf("Found NUMBER: %s\n", (yyvsp[0].str)); }
+#line 1168 "parser.tab.c"
     break;
 
 
-#line 1110 "parser.tab.c"
+#line 1172 "parser.tab.c"
 
       default: break;
     }
@@ -1303,7 +1365,7 @@ yyreturnlab:
 
 
 void yyerror(const char *msg) {
-    fprintf(stderr, "ERRO: %s na linha %d\n", msg, yylineno);
+    fprintf(stderr, "ERRO: %s na linha %d, coluna %d, token: %s\n", msg, yylineno, (int)(strlen(yytext)), yytext);
     exit(1);
 }
 

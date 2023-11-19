@@ -3,20 +3,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Redefine YYSTYPE to include the necessary fields */
-#define YYSTYPE_IS_DECLARED
-typedef struct {
-    char *str;
-} YYSTYPE;
-
-extern YYSTYPE yylval; // Declares the union variable
+extern int yylex();
+extern int yylineno;
+extern char *yytext;
 
 void yyerror(const char *msg);
 
 %}
 
-/* Define tokens */
-%token <yystype> PROGRAMA CAR INT RETORNE LEIA ESCREVA NOVALINHA SE ENTAO SENAO ENQUANTO EXECUTE ID STRING NUMBER
+%union {
+    char *str;
+}
+
+%token PROGRAMA CAR INT RETORNE LEIA ESCREVA NOVALINHA SE ENTAO SENAO ENQUANTO EXECUTE
+%token <str> ID STRING NUMBER
 
 %start program
 
@@ -29,26 +29,26 @@ statement_list: /* empty */
               | statement_list statement
               ;
 
-statement: CAR
-         | INT
-         | RETORNE
-         | LEIA
-         | ESCREVA
-         | NOVALINHA
-         | SE
-         | ENTAO
-         | SENAO
-         | ENQUANTO
-         | EXECUTE
-         | ID       { printf("ID: %s\n", $1.str); }
-         | STRING   { printf("STRING: %s\n", $1.str); }
-         | NUMBER   { printf("NUMBER: %s\n", $1.str); }
+statement: CAR       { printf("Found keyword: CAR\n"); }
+         | INT       { printf("Found keyword: INT\n"); }
+         | RETORNE   { printf("Found keyword: RETORNE\n"); }
+         | LEIA      { printf("Found keyword: LEIA\n"); }
+         | ESCREVA   { printf("Found keyword: ESCREVA\n"); }
+         | NOVALINHA { printf("Found keyword: NOVALINHA\n"); }
+         | SE        { printf("Found keyword: SE\n"); }
+         | ENTAO     { printf("Found keyword: ENTAO\n"); }
+         | SENAO     { printf("Found keyword: SENAO\n"); }
+         | ENQUANTO  { printf("Found keyword: ENQUANTO\n"); }
+         | EXECUTE   { printf("Found keyword: EXECUTE\n"); }
+         | ID        { printf("Found ID: %s\n", $1); }
+         | STRING    { printf("Found STRING: %s\n", $1); }
+         | NUMBER    { printf("Found NUMBER: %s\n", $1); }
          ;
 
 %%
 
 void yyerror(const char *msg) {
-    fprintf(stderr, "ERRO: %s na linha %d\n", msg, yylineno);
+    fprintf(stderr, "ERRO: %s na linha %d, coluna %d, token: %s\n", msg, yylineno, (int)(strlen(yytext)), yytext);
     exit(1);
 }
 
