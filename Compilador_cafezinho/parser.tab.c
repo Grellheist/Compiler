@@ -1085,85 +1085,85 @@ yyreduce:
     {
   case 5: /* statement: CAR  */
 #line 32 "parser.y"
-                     { printf("Found keyword: CAR\n"); }
+                     { printf("Achei a palavra reservada: CAR\n"); }
 #line 1090 "parser.tab.c"
     break;
 
   case 6: /* statement: INT  */
 #line 33 "parser.y"
-                     { printf("Found keyword: INT\n"); }
+                     { printf("Achei a palavra reservada: INT\n"); }
 #line 1096 "parser.tab.c"
     break;
 
   case 7: /* statement: RETORNE  */
 #line 34 "parser.y"
-                     { printf("Found keyword: RETORNE\n"); }
+                     { printf("Achei a palavra reservada: RETORNE\n"); }
 #line 1102 "parser.tab.c"
     break;
 
   case 8: /* statement: LEIA  */
 #line 35 "parser.y"
-                     { printf("Found keyword: LEIA\n"); }
+                     { printf("Achei a palavra reservada: LEIA\n"); }
 #line 1108 "parser.tab.c"
     break;
 
   case 9: /* statement: ESCREVA  */
 #line 36 "parser.y"
-                     { printf("Found keyword: ESCREVA\n"); }
+                     { printf("Achei a palavra reservada: ESCREVA\n"); }
 #line 1114 "parser.tab.c"
     break;
 
   case 10: /* statement: NOVALINHA  */
 #line 37 "parser.y"
-                     { printf("Found keyword: NOVALINHA\n"); }
+                     { printf("Achei a palavra reservada: NOVALINHA\n"); }
 #line 1120 "parser.tab.c"
     break;
 
   case 11: /* statement: SE  */
 #line 38 "parser.y"
-                     { printf("Found keyword: SE\n"); }
+                     { printf("Achei a palavra reservada: SE\n"); }
 #line 1126 "parser.tab.c"
     break;
 
   case 12: /* statement: ENTAO  */
 #line 39 "parser.y"
-                     { printf("Found keyword: ENTAO\n"); }
+                     { printf("Achei a palavra reservada: ENTAO\n"); }
 #line 1132 "parser.tab.c"
     break;
 
   case 13: /* statement: SENAO  */
 #line 40 "parser.y"
-                     { printf("Found keyword: SENAO\n"); }
+                     { printf("Achei a palavra reservada: SENAO\n"); }
 #line 1138 "parser.tab.c"
     break;
 
   case 14: /* statement: ENQUANTO  */
 #line 41 "parser.y"
-                     { printf("Found keyword: ENQUANTO\n"); }
+                     { printf("Achei a palavra reservada: ENQUANTO\n"); }
 #line 1144 "parser.tab.c"
     break;
 
   case 15: /* statement: EXECUTE  */
 #line 42 "parser.y"
-                     { printf("Found keyword: EXECUTE\n"); }
+                     { printf("Achei a palavra reservada: EXECUTE\n"); }
 #line 1150 "parser.tab.c"
     break;
 
   case 16: /* statement: ID  */
 #line 43 "parser.y"
-                     { printf("Found ID: %s\n", (yyvsp[0].str)); }
+                     { printf("Achei o ID: %s\n", (yyvsp[0].str)); }
 #line 1156 "parser.tab.c"
     break;
 
   case 17: /* statement: STRING  */
 #line 44 "parser.y"
-                     { printf("Found STRING: %s\n", (yyvsp[0].str)); }
+                     { printf("Achei a STRING: %s\n", (yyvsp[0].str)); }
 #line 1162 "parser.tab.c"
     break;
 
   case 18: /* statement: NUMBER  */
 #line 45 "parser.y"
-                     { printf("Found NUMBER: %s\n", (yyvsp[0].str)); }
+                     { printf("Achei o NUMERO: %s\n", (yyvsp[0].str)); }
 #line 1168 "parser.tab.c"
     break;
 
@@ -1366,6 +1366,12 @@ yyreturnlab:
 
 void yyerror(const char *msg) {
     fprintf(stderr, "ERRO: %s na linha %d, coluna %d, token: %s\n", msg, yylineno, (int)(strlen(yytext)), yytext);
+    fprintf(stderr, "Context: ");
+    for (int i = 0; i < 5; i++) {
+        yylex(); 
+        fprintf(stderr, "%s ", yytext);
+    }
+    fprintf(stderr, "\n");
     exit(1);
 }
 

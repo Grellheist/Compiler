@@ -29,26 +29,32 @@ statement_list: /* empty */
               | statement_list statement
               ;
 
-statement: CAR       { printf("Found keyword: CAR\n"); }
-         | INT       { printf("Found keyword: INT\n"); }
-         | RETORNE   { printf("Found keyword: RETORNE\n"); }
-         | LEIA      { printf("Found keyword: LEIA\n"); }
-         | ESCREVA   { printf("Found keyword: ESCREVA\n"); }
-         | NOVALINHA { printf("Found keyword: NOVALINHA\n"); }
-         | SE        { printf("Found keyword: SE\n"); }
-         | ENTAO     { printf("Found keyword: ENTAO\n"); }
-         | SENAO     { printf("Found keyword: SENAO\n"); }
-         | ENQUANTO  { printf("Found keyword: ENQUANTO\n"); }
-         | EXECUTE   { printf("Found keyword: EXECUTE\n"); }
-         | ID        { printf("Found ID: %s\n", $1); }
-         | STRING    { printf("Found STRING: %s\n", $1); }
-         | NUMBER    { printf("Found NUMBER: %s\n", $1); }
+statement: CAR       { printf("Achei a palavra reservada: CAR\n"); }
+         | INT       { printf("Achei a palavra reservada: INT\n"); }
+         | RETORNE   { printf("Achei a palavra reservada: RETORNE\n"); }
+         | LEIA      { printf("Achei a palavra reservada: LEIA\n"); }
+         | ESCREVA   { printf("Achei a palavra reservada: ESCREVA\n"); }
+         | NOVALINHA { printf("Achei a palavra reservada: NOVALINHA\n"); }
+         | SE        { printf("Achei a palavra reservada: SE\n"); }
+         | ENTAO     { printf("Achei a palavra reservada: ENTAO\n"); }
+         | SENAO     { printf("Achei a palavra reservada: SENAO\n"); }
+         | ENQUANTO  { printf("Achei a palavra reservada: ENQUANTO\n"); }
+         | EXECUTE   { printf("Achei a palavra reservada: EXECUTE\n"); }
+         | ID        { printf("Achei o ID: %s\n", $1); }
+         | STRING    { printf("Achei a STRING: %s\n", $1); }
+         | NUMBER    { printf("Achei o NUMERO: %s\n", $1); }
          ;
 
 %%
 
 void yyerror(const char *msg) {
     fprintf(stderr, "ERRO: %s na linha %d, coluna %d, token: %s\n", msg, yylineno, (int)(strlen(yytext)), yytext);
+    fprintf(stderr, "Context: ");
+    for (int i = 0; i < 5; i++) {
+        yylex(); 
+        fprintf(stderr, "%s ", yytext);
+    }
+    fprintf(stderr, "\n");
     exit(1);
 }
 

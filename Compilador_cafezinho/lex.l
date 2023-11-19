@@ -8,7 +8,8 @@
 %option noyywrap
 
 numeros ([0-9])+
-id ([a-zA-Z_][a-zA-Z0-9_])*
+letras [a-zA-Z]
+id [a-zA-Z_][a-zA-Z0-9_]*
 string (\"[^\"\n]*\")
 
 

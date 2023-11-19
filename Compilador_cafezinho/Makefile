@@ -1,13 +1,9 @@
-#Substitua o valor de CC com o nome do compilador que voce usa: gcc ou g++
 CC = gcc
-CFLAGS =   -g  -Wall -ansi
-LFLAGS = -lm
+CFLAGS =   -o
+LFLAGS = -lfl
 
-# O programaPrincipal executavel depende de lexico.o e main.o. Uma vez obtidos estes arquivos eles sao "linkados"
-# gerando o executavel programaPrincipal
-
-programaPrincipal:   lexico.o  main.o
-	$(CC) $(CFLAGS) $(LFLAGS) lexico.o main.o -o  programaPrincipal
+cafezinho:   lex.yy.c  parser.tab.c
+	$(CC) $(CFLAGS) cafezinho lex.yy.c parser.tab.c $(LFLAGS)
                 
 # main.o depende de main.cc. Se ele for alterado, main.o deve ser obtido novamente e o comando para fazer isto é 
 # comando de compilacao dada na segunda linha a seguir
